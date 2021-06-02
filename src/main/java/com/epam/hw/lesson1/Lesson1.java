@@ -14,7 +14,6 @@ public class Lesson1 {
     @BeforeClass
     public void appSetup() {
         driver = new ChromeDriver();
-
     }
 
     @AfterClass
@@ -22,24 +21,14 @@ public class Lesson1 {
         driver.close();
     }
 
+    public void clickButton(ButtonsList buttonsList) {
+        selectButton(buttonsList).click();
+    }
 
-    private WebElement getButtonText(ButtonsList buttonsList) {
+    private WebElement selectButton(ButtonsList buttonsList) {
         return driver.findElements(cssSelector("Button")).stream()
                 .filter(button -> button.getText().equals(buttonsList.getButtonsDesc()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No button with such text " + buttonsList.getButtonsDesc()));
-    }
-
-    private WebElement selectButton(String buttonName) {
-        return driver.findElements(cssSelector("Button")).stream()
-                .filter(button -> button
-                        .getText()
-                        .equals(buttonName))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No button with such name " + buttonName));
-    }
-
-    public void clickButton(String buttonName) {
-        selectButton("button1").click();
     }
 }
